@@ -2,13 +2,32 @@
 
 {% block content %}
 <div class="card">
-  <img src="..." class="card-img-top" alt="Профиль пользоваетля '{{current_user.name}}'">
-
+  <p>
+  <img src="" class="card-img-top" alt="Профиль пользователя '{{current_user.name}}'" width="25" height="25">
+  <label>{{ current_user.name }} </label>
+  <label>{{ current_user.surname }}</label>
+  </p>
   <div class="card-body">
     <h5 class="card-title"></h5>
     <p class="card-text">ID: {{current_user.id}}.</p>
-    <a href="#" class="btn btn-primary">Настройки</a>
-    <a href="#" class="btn btn-primary">Выйти</a>
+    {% if current_user.age != None %}
+      <p class="card-text">Возраст: {{current_user.age}}.</p>
+    {% else %}
+      <p class="card-text">Возраст: Не указан.</p>
+    {% endif %}
+    {% if current_user.address != None %}
+      <p class="card-text">Адрес: {{current_user.address}}.</p>
+    {% else %}
+      <p class="card-text">Адрес: Не указан.</p>
+    {% endif %}
+    <p class="card-text">Email: {{current_user.email}}.</p>
+    {% if current_user.about != None %}
+      <p class="card-text">О себе: {{current_user.about}}.</p>
+    {% else %}
+      <p class="card-text">О себе: Не указано.</p>
+    {% endif %}
+    <a href="/profile_settings/{{ current_user.id }}" class="btn btn-primary">Настройки</a>
+    <a href="/logout" class="btn btn-primary">Выйти</a>
   </div>
 </div>
 
