@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>
+    {% if current_user.is_authenticated %}
+        {% if current_user.is_admin == 2 %}
+            <a class="btn btn-primary " href="/register">Добавить новость</a>
+        {% endif %}
+    {% endif %}
+</p>
+<div class="news">
+    <div class="card">
+        <img src="../static/img/patch7.31.png" class="card-img-top">
+        <div class="card-body">
+            <p class="card-text">Вышел патч 7.31!</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -88,6 +88,11 @@ def profile_settings(user_id):
     return render_template('profile_settings.html', title='Настройки профиля', form=form)
 
 
+@app.route('/dota2')
+def dota_news():
+    return render_template('dota2.html', title='Dota 2')
+
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -98,5 +103,3 @@ def logout():
 if __name__ == '__main__':
     db_session.global_init("db/GameWiki.db")
     app.run()
-
-#TODO: Доделать форму profile.html для профиля пользователя
