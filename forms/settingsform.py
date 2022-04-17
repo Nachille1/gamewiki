@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, EmailField, IntegerField, PasswordField
+from wtforms import StringField, SubmitField, EmailField, IntegerField, PasswordField, TextAreaField
 from wtforms.validators import DataRequired
 
 
@@ -8,5 +8,5 @@ class SettingsForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     age = IntegerField('Возраст', validators=[DataRequired()])
     address = StringField('Адрес')
-    about = StringField('О себе')
+    about = TextAreaField('О себе')
     submit = SubmitField('Сохранить')

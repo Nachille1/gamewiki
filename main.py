@@ -1,10 +1,12 @@
 from flask import Flask, render_template, redirect, request
 from data import db_session
 from data.users import User
-from data.loginform import LoginForm
-from data.settingsform import SettingsForm
+from data.add_news import AddNews
+from forms.loginform import LoginForm
+from forms.settingsform import SettingsForm
 from flask_login import LoginManager, login_user, login_required, logout_user
 from forms.user import RegisterForm
+from forms.add_newsform import AddNewsForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -75,6 +77,7 @@ def profile_settings(user_id):
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
+        print(user)
         if user and user.check_password(form.password.data):
             login_user(user)
             user.age = form.age.data
@@ -90,7 +93,24 @@ def profile_settings(user_id):
 
 @app.route('/dota2')
 def dota_news():
-    return render_template('dota2.html', title='Dota 2')
+    db_sess = db_session.create_session()
+    news_list = db_sess.query(AddNews).all()
+    return render_template('dota2.html', title='Dota 2', news_list=news_list)
+
+
+@app.route('/add_news', methods=['GET', 'POST'])
+def add_news():
+    form = AddNewsForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        add_new = AddNews()
+        add_new.header = form.header.data
+        add_new.description = form.description.data
+        db_sess.add(add_new)
+        print(db_sess.query(AddNews).all())
+        db_sess.commit()
+        return redirect("/dota2")
+    return render_template('add_news.html', title='Добавление новости', form=form)
 
 
 @app.route('/logout')
