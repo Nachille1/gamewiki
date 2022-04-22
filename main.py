@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, render_template, redirect, request
 from data import db_session
 from data.users import User
@@ -17,7 +18,9 @@ login_manager.init_app(app)
 
 @app.route('/')
 def main():
-    return render_template('news.html', title='GameWiki')
+    db_sess = db_session.create_session()
+    news_list = db_sess.query(AddNews).all()
+    return render_template('news.html', title='GameWiki', news_list=news_list[::-1])
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -94,22 +97,46 @@ def profile_settings(user_id):
 @app.route('/dota2')
 def dota_news():
     db_sess = db_session.create_session()
-    news_list = db_sess.query(AddNews).all()
+    news_list = db_sess.query(AddNews).filter(AddNews.game == 'dota').all()
     return render_template('dota2.html', title='Dota 2', news_list=news_list)
 
 
-@app.route('/add_news', methods=['GET', 'POST'])
-def add_news():
+@app.route('/add_news_dota', methods=['GET', 'POST'])
+def add_news_dota():
     form = AddNewsForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         add_new = AddNews()
         add_new.header = form.header.data
         add_new.description = form.description.data
+        add_new.game = 'dota'
+        add_new.date = datetime.datetime.now().strftime('%d %b %Y')
         db_sess.add(add_new)
-        print(db_sess.query(AddNews).all())
         db_sess.commit()
         return redirect("/dota2")
+    return render_template('add_news.html', title='Добавление новости', form=form)
+
+
+@app.route('/cs')
+def cs_news():
+    db_sess = db_session.create_session()
+    news_list = db_sess.query(AddNews).filter(AddNews.game == 'cs').all()
+    return render_template('cs.html', title='CS:GO', news_list=news_list)
+
+
+@app.route('/add_news_cs', methods=['GET', 'POST'])
+def add_news_cs():
+    form = AddNewsForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        add_new = AddNews()
+        add_new.header = form.header.data
+        add_new.description = form.description.data
+        add_new.game = 'cs'
+        add_new.date = datetime.datetime.now().strftime('%d %b %Y')
+        db_sess.add(add_new)
+        db_sess.commit()
+        return redirect("/cs")
     return render_template('add_news.html', title='Добавление новости', form=form)
 
 

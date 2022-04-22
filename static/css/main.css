@@ -1,0 +1,44 @@
+div.date {
+    position:absolute;
+    top:36px;
+    right:20px;
+    font-size:20px
+}
+div.news {
+    width: 90%;
+    height: 90%;
+    display:block;
+    margin:auto;
+}
+div.card {
+    background: rgba(0, 0, 0, 0);
+    color: white;
+    border: 0px
+}
+body {
+    color: white;
+    background-color: #15171b;
+    background-size: cover;
+    background-image: url(https://cdn.cloudflare.steamstatic.com/apps/dota2/images/outlanders/patch-notes/bg_repeater.jpg)
+}
+nav.navbar {
+    background-color: #15171b;
+}
+a.nav-link {
+    color: white;
+}
+li.nav-item {
+    color: white;
+}
+label.gamewiki {
+    color: white;
+    margin-left: 6px;
+}
+label.top {
+    color: white;
+    margin-left: 6px;
+    font-family: "Arial Rounded MT Bold", sans-serif;
+}
+label.lol {
+    color: gray
+}

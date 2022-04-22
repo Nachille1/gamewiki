@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>
+    {% if current_user.is_authenticated %}
+    {% if current_user.is_admin == 1 %}
+    <a class="btn btn-primary " href="/add_news_cs">Добавить новость</a>
+    {% endif %}
+    {% endif %}
+</p>
+{% for news in news_list %}
+<div class="news">
+    <div class="card">
+        <img src="../static/img/riptide.jpg" class="card-img-top">
+        <div class="card-body">
+            <p class="card-text">
+            <h2>{{ news.header }}</h2>
+            <div>{{ news.description }}</div>
+            </p>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+{% endfor %}
+{% endblock %}

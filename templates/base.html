@@ -8,29 +8,29 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/"><img src="../static/img/logo.png" alt="" width="30" height="24"> GameWiki</a>
+          <a class="navbar-brand" href="/"><img src="../static/img/logo2.png" alt="" width="30" height="24"><label class="gamewiki"> GameWiki</label></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/dota2"><img src="../static/img/Dota2.png" alt="" width="25" height="24"> Dota 2</a>
+                <a class="nav-link active" aria-current="page" href="/dota2"><img src="../static/img/Dota2.png" alt="" width="25" height="24"><label class="top"> Dota 2</label></a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href=""><img src="../static/img/csgo.png" alt="" width="25" height="24"> CS:GO</a>
+              <a class="nav-link active" aria-current="page" href="/cs"><img src="../static/img/csgo.png" alt="" width="25" height="24"><label class="top"> CS:GO</label></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled"><img src="../static/img/lol.png" alt="" width="25" height="25"> League of Legends</a>
+              <a class="nav-link disabled"><img src="../static/img/lol.png" alt="" width="25" height="25"><label class="lol"> League of Legends</label></a>
             </li>
           </ul>
           <form class="d-flex">
             <p>
                 {% if current_user.is_authenticated %}
-                    <a class="navbar-brand" href="/user/{{current_user.id}}">{{ current_user.name }}</a>
+                <a class="navbar-brand" href="/user/{{current_user.id}}"><label class="top">{{ current_user.name }}</label></a>
                 {% else %}
                     <p>
                         <a class="btn btn-primary " href="/register">Зарегистрироваться</a>

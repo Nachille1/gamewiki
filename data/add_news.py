@@ -8,3 +8,5 @@ class AddNews(SqlAlchemyBase, UserMixin):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     header = sqlalchemy.Column(sqlalchemy.String)
     description = sqlalchemy.Column(sqlalchemy.Text)
+    game = sqlalchemy.Column(sqlalchemy.String)
+    date = sqlalchemy.Column(sqlalchemy.String)

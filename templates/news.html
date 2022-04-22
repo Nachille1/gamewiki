@@ -1,5 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p>Привет, !</p>
+{% for news in news_list %}
+    <div class="news">
+        <div class="card">
+            {% if news.game == "dota" %}
+                <br>
+                <h1 class="news_header">Dota 2</h1>
+                <br>
+                <div class="date">{{ news.date }}</div>
+                <img src="../static/img/patch7.31.png" class="card-img-top">
+            {% elif news.game == "cs" %}
+                <br>
+                <h1>CS:GO</h1>
+                <br>
+                <div class="date">{{ news.date }}</div>
+                <img src="../static/img/riptide.jpg" class="card-img-top">
+            {% endif %}
+            <div class="card-body">
+                <p class="card-text">
+                <h2>{{ news.header }}</h2>
+                <div>{{ news.description }}</div>
+                </p>
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+{% endfor %}
 {% endblock %}
