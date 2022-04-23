@@ -80,7 +80,6 @@ def profile_settings(user_id):
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
-        print(user)
         if user and user.check_password(form.password.data):
             login_user(user)
             user.age = form.age.data
@@ -98,7 +97,7 @@ def profile_settings(user_id):
 def dota_news():
     db_sess = db_session.create_session()
     news_list = db_sess.query(AddNews).filter(AddNews.game == 'dota').all()
-    return render_template('dota2.html', title='Dota 2', news_list=news_list)
+    return render_template('dota2.html', title='Dota 2', news_list=news_list[::-1])
 
 
 @app.route('/add_news_dota', methods=['GET', 'POST'])
@@ -121,7 +120,7 @@ def add_news_dota():
 def cs_news():
     db_sess = db_session.create_session()
     news_list = db_sess.query(AddNews).filter(AddNews.game == 'cs').all()
-    return render_template('cs.html', title='CS:GO', news_list=news_list)
+    return render_template('cs.html', title='CS:GO', news_list=news_list[::-1])
 
 
 @app.route('/add_news_cs', methods=['GET', 'POST'])
