@@ -3,7 +3,7 @@
 {% block content %}
 <p></p>
 <h1>Настройки профиля</h1>
-<form action="" method="post">
+<form action="" method="post" enctype=multipart/form-data>
     {{ form.hidden_tag() }}
     <p>
         {{ form.email.label }}<br>
@@ -50,7 +50,12 @@
     </div>
     {% endfor %}
     </p>
-    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    <p>Загрузить фотографию пользователя</p>
+
+        <input type=file name=profile>
+    <input type=submit >
+<!--    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>-->
     <div>{{ message }}</div>
 </form>
+
 {% endblock %}

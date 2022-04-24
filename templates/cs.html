@@ -11,12 +11,7 @@
 {% for news in news_list %}
 <div class="news">
     <div class="card">
-        <div class="date">{{ news.date }}</div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <img src="../static/img/riptide.jpg" class="card-img-top">
+        <img src="{{ news.image }}" class="card-img-top">
         <div class="card-body">
             <p class="card-text">
             <h2>{{ news.header }}</h2>

@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Добавление новости</h1>
 <p></p>
-<form action="" method="post">
+<form action="" method="post" enctype=multipart/form-data>
     {{ form.hidden_tag() }}
     <p>
         {{ form.header.label }}<br>
@@ -23,7 +23,10 @@
     </p>
     {% endfor %}
     </p>
-    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+     <p>Загрузить фотографию Новости</p>
+        <input type=file name=profile>
+    <input type=submit value="Сохранить">
+    <br>
     {{message}}
 </form>
 {% endblock %}

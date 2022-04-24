@@ -10,3 +10,4 @@ class AddNews(SqlAlchemyBase, UserMixin):
     description = sqlalchemy.Column(sqlalchemy.Text)
     game = sqlalchemy.Column(sqlalchemy.String)
     date = sqlalchemy.Column(sqlalchemy.String)
+    image = sqlalchemy.Column(sqlalchemy.String)

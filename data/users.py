@@ -17,6 +17,7 @@ class User(SqlAlchemyBase, UserMixin):
     modified_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
     about = sqlalchemy.Column(sqlalchemy.String)
     is_admin = sqlalchemy.Column(sqlalchemy.Integer)
+    profile_image = sqlalchemy.Column(sqlalchemy.String)
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)

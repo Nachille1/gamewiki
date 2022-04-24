@@ -9,13 +9,13 @@
                 <h1 class="news_header">Dota 2</h1>
                 <br>
                 <div class="date">{{ news.date }}</div>
-                <img src="../static/img/patch7.31.png" class="card-img-top">
+                <img src="{{ news.image }}" class="card-img-top">
             {% elif news.game == "cs" %}
                 <br>
                 <h1>CS:GO</h1>
                 <br>
                 <div class="date">{{ news.date }}</div>
-                <img src="../static/img/riptide.jpg" class="card-img-top">
+                <img src="{{ news.image }}" class="card-img-top">
             {% endif %}
             <div class="card-body">
                 <p class="card-text">

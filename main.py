@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for
 from data import db_session
 from data.users import User
 from data.add_news import AddNews
@@ -8,12 +8,15 @@ from forms.settingsform import SettingsForm
 from flask_login import LoginManager, login_user, login_required, logout_user
 from forms.user import RegisterForm
 from forms.add_newsform import AddNewsForm
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+uploads_dir = os.path.join('', 'static/img')
 
 
 @app.route('/')
@@ -71,13 +74,27 @@ def load_user(user_id):
 
 @app.route('/user/<int:id>', methods=['GET', 'POST'])
 def profile(id):
-    return render_template('profile.html', title='Профиль')
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.id == id).first()
+    return render_template('profile.html', title='Профиль', user=user)
 
 
 @app.route('/profile_settings/<int:user_id>', methods=['GET', 'POST'])
 def profile_settings(user_id):
     form = SettingsForm()
-    if form.validate_on_submit():
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.id == user_id).first()
+    if request.method == 'POST':
+        if request.files['profile']:
+            profile = request.files['profile']
+            profile.save(os.path.join(uploads_dir, secure_filename(profile.filename)))
+
+            # save each "charts" file
+            for file in request.files.getlist('charts'):
+                file.save(os.path.join(uploads_dir, secure_filename(file.name)))
+    # if form.validate_on_submit():
+        print(2)
+        print(user)
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
@@ -85,11 +102,17 @@ def profile_settings(user_id):
             user.age = form.age.data
             user.address = form.address.data
             user.about = form.about.data
+            if request.files['profile']:
+                user.profile_image = f'../static/img/{profile.filename}'
             db_sess.commit()
             return redirect("/")
         return render_template('profile_settings.html',
                                message="Неправильный логин или пароль",
                                form=form)
+    form.age.data = user.age
+    form.about.data = user.about
+    form.email.data = user.email
+    form.address.data = user.address
     return render_template('profile_settings.html', title='Настройки профиля', form=form)
 
 
@@ -103,36 +126,54 @@ def dota_news():
 @app.route('/add_news_dota', methods=['GET', 'POST'])
 def add_news_dota():
     form = AddNewsForm()
-    if form.validate_on_submit():
-        db_sess = db_session.create_session()
-        add_new = AddNews()
-        add_new.header = form.header.data
-        add_new.description = form.description.data
-        add_new.game = 'dota'
-        add_new.date = datetime.datetime.now().strftime('%d %b %Y')
-        db_sess.add(add_new)
-        db_sess.commit()
-        return redirect("/dota2")
+    if request.method == 'POST':
+        if request.files['profile']:
+            profile = request.files['profile']
+            profile.save(os.path.join(uploads_dir, secure_filename(profile.filename)))
+
+            # save each "charts" file
+            for file in request.files.getlist('charts'):
+                file.save(os.path.join(uploads_dir, secure_filename(file.name)))
+            db_sess = db_session.create_session()
+            add_new = AddNews()
+            add_new.header = form.header.data
+            add_new.description = form.description.data
+            add_new.game = 'dota'
+            add_new.date = datetime.datetime.now().strftime('%d %b %Y')
+            add_new.image = f'../static/img/{profile.filename}'
+            db_sess.add(add_new)
+            db_sess.commit()
+            return redirect("/dota2")
+        else:
+            return render_template('add_news.html', title='Добавление новости', form=form, message='Добавьте картинку!')
     return render_template('add_news.html', title='Добавление новости', form=form)
+
 
 
 @app.route('/cs')
 def cs_news():
     db_sess = db_session.create_session()
     news_list = db_sess.query(AddNews).filter(AddNews.game == 'cs').all()
-    return render_template('cs.html', title='CS:GO', news_list=news_list[::-1])
-
+    return render_template('cs.html', title='CS:GO', news_list=news_list)
 
 @app.route('/add_news_cs', methods=['GET', 'POST'])
 def add_news_cs():
     form = AddNewsForm()
-    if form.validate_on_submit():
+    if request.method == 'POST':
+        if request.files['profile']:
+            profile = request.files['profile']
+            profile.save(os.path.join(uploads_dir, secure_filename(profile.filename)))
+
+            # save each "charts" file
+            for file in request.files.getlist('charts'):
+                file.save(os.path.join(uploads_dir, secure_filename(file.name)))
         db_sess = db_session.create_session()
         add_new = AddNews()
         add_new.header = form.header.data
         add_new.description = form.description.data
         add_new.game = 'cs'
         add_new.date = datetime.datetime.now().strftime('%d %b %Y')
+        add_new.image = f'../static/img/{profile.filename}'
         db_sess.add(add_new)
         db_sess.commit()
         return redirect("/cs")
@@ -143,6 +184,7 @@ def add_news_cs():
 @login_required
 def logout():
     logout_user()
+    print(1)
     return redirect('/')
 
 
