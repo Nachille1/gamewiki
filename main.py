@@ -197,9 +197,35 @@ def cs_for_new_players():
 def cs_guns():
     return render_template('cs_guns.html', title='Оружие в кс')
 
+
 @app.route('/cs_economy')
 def cs_economy():
     return render_template('cs_economy.html', title='Экономика в кс')
+
+
+@app.route('/dota_for_new_players')
+def dota_for_new_players():
+    return render_template('dota_for_new_players.html', title='Дота для новичков')
+
+
+@app.route('/dota_choice')
+def dota_choice():
+    return render_template('dota_choice.html', title='Дота для новичков')
+
+
+@app.route('/dota_heroes_for_new_players')
+def dota_heroes_for_new_players():
+    return render_template('dota_heroes_for_new_players.html', title='Дота для новичков')
+
+
+@app.route('/dota_sokrasheniya')
+def dota_sokrasheniya():
+    return render_template('dota_sokrasheniya.html', title='Сокращения Dota 2')
+
+
+@app.route('/cs_choice')
+def cs_choice():
+    return render_template('cs_choice.html', title='Кс для новичков')
 
 
 if __name__ == '__main__':

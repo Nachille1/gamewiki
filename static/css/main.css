@@ -1,3 +1,16 @@
+html,
+body {
+	height: 100%;
+}
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+.content {
+	flex: 1 0 auto;
+}
+
 div.date {
     position:absolute;
     top:36px;
@@ -19,7 +32,10 @@ body {
     color: white;
     background-color: #15171b;
     background-size: cover;
+    min-height: 100%;
+    margin: 0;
     background-image: url(https://cdn.cloudflare.steamstatic.com/apps/dota2/images/outlanders/patch-notes/bg_repeater.jpg)
+
 }
 nav.navbar {
     background-color: #15171b;
@@ -53,7 +69,9 @@ div.dropdown-menu a:hover {background-color: #25272a;}
 * {
   font-family: Roboto;
 }
-
+p {
+    font-size: 20px;
+}
 section {
   width: 100%;
   display: inline-block;
@@ -73,6 +91,9 @@ section {
   text-align: left;
   font: normal 16px sans-serif;
   padding: 45px 50px;
+  clear:both;
+  margin:auto;
+  flex: 0 0 auto;
 }
 
 .footer-distributed .footer-left p {
