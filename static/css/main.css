@@ -28,6 +28,9 @@ div.card {
     color: white;
     border: 0px
 }
+main.container {
+    padding-bottom: 180px
+}
 body {
     color: white;
     background-color: #15171b;
@@ -94,6 +97,8 @@ section {
   clear:both;
   margin:auto;
   flex: 0 0 auto;
+  position: fixed;
+  top: 85%;
 }
 
 .footer-distributed .footer-left p {
