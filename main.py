@@ -88,13 +88,8 @@ def profile_settings(user_id):
         if request.files['profile']:
             profile = request.files['profile']
             profile.save(os.path.join(uploads_dir, secure_filename(profile.filename)))
-
-            # save each "charts" file
             for file in request.files.getlist('charts'):
                 file.save(os.path.join(uploads_dir, secure_filename(file.name)))
-    # if form.validate_on_submit():
-        print(2)
-        print(user)
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
@@ -130,8 +125,6 @@ def add_news_dota():
         if request.files['profile']:
             profile = request.files['profile']
             profile.save(os.path.join(uploads_dir, secure_filename(profile.filename)))
-
-            # save each "charts" file
             for file in request.files.getlist('charts'):
                 file.save(os.path.join(uploads_dir, secure_filename(file.name)))
             db_sess = db_session.create_session()
@@ -149,12 +142,12 @@ def add_news_dota():
     return render_template('add_news.html', title='Добавление новости', form=form)
 
 
-
 @app.route('/cs')
 def cs_news():
     db_sess = db_session.create_session()
     news_list = db_sess.query(AddNews).filter(AddNews.game == 'cs').all()
-    return render_template('cs.html', title='CS:GO', news_list=news_list)
+    return render_template('cs.html', title='CS:GO', news_list=news_list[::-1])
+
 
 @app.route('/add_news_cs', methods=['GET', 'POST'])
 def add_news_cs():
@@ -163,8 +156,6 @@ def add_news_cs():
         if request.files['profile']:
             profile = request.files['profile']
             profile.save(os.path.join(uploads_dir, secure_filename(profile.filename)))
-
-            # save each "charts" file
             for file in request.files.getlist('charts'):
                 file.save(os.path.join(uploads_dir, secure_filename(file.name)))
         db_sess = db_session.create_session()
@@ -184,7 +175,6 @@ def add_news_cs():
 @login_required
 def logout():
     logout_user()
-    print(1)
     return redirect('/')
 
 

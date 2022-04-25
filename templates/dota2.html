@@ -11,7 +11,12 @@
 {% for news in news_list %}
     <div class="news">
         <div class="card">
-            <img src="../static/img/patch7.31.png" class="card-img-top">
+            <div class="date">{{ news.date }}</div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <img src="{{ news.image }}" class="card-img-top">
             <div class="card-body">
                 <p class="card-text">
                     <h2>{{ news.header }}</h2>
