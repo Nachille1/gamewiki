@@ -188,6 +188,20 @@ def logout():
     return redirect('/')
 
 
+@app.route('/cs_for_new_players')
+def cs_for_new_players():
+    return render_template('cs_for_new_players.html', title='Кс для новичков')
+
+
+@app.route('/cs_guns')
+def cs_guns():
+    return render_template('cs_guns.html', title='Оружие в кс')
+
+@app.route('/cs_economy')
+def cs_economy():
+    return render_template('cs_economy.html', title='Экономика в кс')
+
+
 if __name__ == '__main__':
     db_session.global_init("db/GameWiki.db")
     app.run()
