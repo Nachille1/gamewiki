@@ -340,4 +340,5 @@ def add_news_random_game():
 # Запуск программы
 if __name__ == '__main__':
     db_session.global_init("db/GameWiki.db")
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
