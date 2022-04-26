@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Добавление новости</h1>
+<p></p>
+<form action="" method="post" enctype=multipart/form-data>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.header.label }}<br>
+        {{ form.header(class="form-control") }}<br>
+        {% for error in form.header.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.game.label }}<br>
+        {{ form.game(class="form-control") }}<br>
+        {% for error in form.game.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.description.label }}<br>
+        {{ form.description(class="form-control") }}<br>
+        {% for error in form.description.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+     <p>Загрузить фотографию Новости</p>
+        <input type=file name=profile>
+    <input type=submit value="Сохранить">
+    <br>
+    {{message}}
+</form>
+{% endblock %}

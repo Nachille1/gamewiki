@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% if current_user.is_authenticated %}
+    {% if current_user.is_admin == 1 %}
+    <a class="btn btn-dark" href="/add_news_random_game">Добавить новость</a>
+    {% endif %}
+    {% endif %}
 {% for news in news_list %}
     <div class="news">
         <div class="card">
@@ -13,6 +18,12 @@
             {% elif news.game == "cs" %}
                 <br>
                 <h1>CS:GO</h1>
+                <br>
+                <div class="date">{{ news.date }}</div>
+                <img src="{{ news.image }}" class="card-img-top">
+            {% else %}
+            <br>
+                <h1>{{ news.game }}</h1>
                 <br>
                 <div class="date">{{ news.date }}</div>
                 <img src="{{ news.image }}" class="card-img-top">
