@@ -1,8 +1,10 @@
 import datetime
 import os
+from werkzeug.utils import secure_filename
 
-import flask_login
 from flask import Flask, render_template, redirect, request, url_for
+import flask_login
+
 from data import db_session
 from data.users import User
 from data.add_news import AddNews
@@ -10,10 +12,8 @@ from forms.loginform import LoginForm
 from forms.settingsform import SettingsForm
 from flask_login import LoginManager, login_user, login_required, logout_user
 from forms.user import RegisterForm
-from flask_login import AnonymousUserMixin
 from forms.add_newsform import AddNewsForm
 from data.comments import Comment
-from werkzeug.utils import secure_filename
 from forms.add_comment import AddComment
 from forms.add_news_random_game import AddNewsRandomGame
 
