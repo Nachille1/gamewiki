@@ -1,4 +1,6 @@
 import datetime
+
+import flask_login
 from flask import Flask, render_template, redirect, request, url_for
 from data import db_session
 from data.users import User
@@ -8,8 +10,13 @@ from forms.settingsform import SettingsForm
 from flask_login import LoginManager, login_user, login_required, logout_user
 from forms.user import RegisterForm
 from forms.add_newsform import AddNewsForm
+from data.comments import Comment
 import os
 from werkzeug.utils import secure_filename
+from forms.add_comment import AddComment
+
+date = datetime.datetime.now()
+print(date.hour)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -216,6 +223,31 @@ def dota_sokrasheniya():
 @app.route('/cs_choice')
 def cs_choice():
     return render_template('cs_choice.html', title='Кс для новичков')
+
+
+@app.route('/news/<int:news_id>', methods=['GET', 'POST'])
+@login_required
+def news(news_id):
+    form = AddComment()
+    db_sess = db_session.create_session()
+    if request.method == "POST":
+        print(1)
+        new_comment = Comment()
+        new_comment.id_news = news_id
+        new_comment.id_user = flask_login.current_user.id
+        new_comment.content = form.description.data
+        db_sess.add(new_comment)
+        db_sess.commit()
+        return redirect(f"/news/{news_id}")
+    news = db_sess.query(AddNews).filter(AddNews.id == news_id).first()
+    comments = db_sess.query(Comment).filter(Comment.id_news == news_id).all()
+    all_users = set()
+    for x in comments:
+        users = db_sess.query(User).filter(User.id == x.id_user).all()
+        for el in users:
+            all_users.add(el)
+    all_users = list(all_users)
+    return render_template('one_news.html', title='Новость', news=news, comments=comments[::-1], users=all_users, form=form)
 
 
 if __name__ == '__main__':

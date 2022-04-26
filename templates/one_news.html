@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="news">
+        <div class="card">
+            <h1>{{ news.header}}</h1>
+                <br>
+                <br>
+                <div class="date">{{ news.date }}</div>
+                <img src="{{ news.image }}" class="card-img-top">
+                <br>
+                <br>
+            <div class="card-body">
+                <p class="card-text">
+                <div><p>{{ news.description }}</p></div>
+                </p>
+            </div>
+        </div>
+    </div>
+ <div class="col-sm-5 col-md-6 col-12 pb-4">
+     <br>
+                <h1>Комментарии:</h1>
+                    <br>
+                {% for comment in comments %}
+                    {% for user in users %}
+                        {% if user.id == comment.id_user %}
+                <div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="card card-white post">
+                <div class="post-heading">
+                    <div class="float-left image">
+                        <img src="{{ user.profile_image }}"  class="rounded-circle" alt="user profile image" width="30" height="30">
+                    </div>
+                    <div class="float-left meta">
+                        <div class="title h5">
+                            <a href="../user/{{ user.id }}"><p>{{ user.name }}</p></a>
+                        </div>
+                        <h6 class="text-muted time">{{ comment.date.date() }} {{ comment.date.hour }}:{{ comment.date.minute }}</h6>
+                    </div>
+                </div>
+                <div class="post-description">
+                    <p>{{ comment.content }}</p>
+                                            <br>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+     <br>
+     <br>
+                <form  method="post" action="">
+                    <div class="form-group">
+                        <p style="font">Напишите свой комментарий:</p>
+                       <div width="123">{{ form.description }}</div>
+                    </div>
+                    <p> {{ form.submit(type="submit", class="btn btn-dark") }} </p>
+                </form>
+            </div>
+{% endblock %}
