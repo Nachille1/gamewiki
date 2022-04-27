@@ -176,7 +176,8 @@ def add_news_dota():
 
             return redirect("/dota2")
         else:
-            return render_template('add_news.html', title='Добавление новости', form=form, message='Добавьте картинку!')
+            return render_template('add_news.html', title='Добавление новости', form=form,
+                                   message='Добавьте картинку!')
 
     return render_template('add_news.html', title='Добавление новости', form=form)
 
@@ -301,7 +302,8 @@ def news(news_id):
         for el in users:
             all_users.add(el)
     all_users = list(all_users)
-    return render_template('one_news.html', title='Новость', news=news, comments=comments[::-1], users=all_users, form=form)
+    return render_template('one_news.html', title='Новость', news=news, comments=comments[::-1],
+                           users=all_users, form=form)
 
 
 # Страница для оповещения пользователя чтобы тот зарегистрировался
